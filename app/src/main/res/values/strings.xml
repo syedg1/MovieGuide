@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">MovieGuide</string>
+    <string name="Summary">Summary</string>
+    <string name="Trailers">Trailers</string>
+    <string name="PrevButton">Prev</string>
+    <string name="NextButton">Next</string>
+    <string name="action_filter">Filter</string>
+    <string name="action_search">Search</string>
+    <string name="search_hint">enter a movie name</string>
+</resources>
