@@ -9,9 +9,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class RetrofitClient2 {
 
-    /**
-     * Retrofit object to be initialized
-     */
     private static Retrofit retrofit = null;
 
     /**

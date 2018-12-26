@@ -11,28 +11,17 @@ import java.util.List;
  */
 public class VideoList {
 
-    /**
-     * Contains a list of movies
-     */
     @SerializedName("results")
     @Expose
     private List<Video> videos = null;
 
     /**
-     * Gets the list of loaded movies
-     * @return list of movies loaded from API
+     * Gets the list of loads video
+     * @return videos
      */
     public List<Video> getVideos()
     {
         return videos;
-    }
-
-    /**
-     * Updates the list of movies
-     * @param videos new list of movies
-     */
-    public void setVideos(List<Video> videos) {
-        this.videos = videos;
     }
 
 }

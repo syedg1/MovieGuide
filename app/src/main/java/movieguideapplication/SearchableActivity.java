@@ -17,10 +17,17 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * This class is responsible for handling the searching functionality
+ */
 public class SearchableActivity extends AppCompatActivity {
 
     ListView listView;
 
+    /**
+     * Creates the user interface when the application is run
+     * @param savedInstanceState Holds the saved state of the application
+     */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,12 +44,22 @@ public class SearchableActivity extends AppCompatActivity {
         searchMovies(query);
     }
 
+    /**
+     * This method takes a query and makes an API request to retrieve a list of movies matching that query
+     * @param query The movie name to be searched for
+     */
     private void searchMovies(String query){
 
         MovieRetriever movieRetriever = ApiUtils.getMovieRetriever();
 
         Call<MovieList> call = movieRetriever.getMovie(query);
         call.enqueue(new Callback<MovieList>() {
+
+            /**
+             * Puts the movies into a list
+             * @param call list of movies to be extracted from API
+             * @param response response from the API
+             */
             @Override
             public void onResponse(Call<MovieList> call, Response<MovieList> response) {
                 final MovieList movieList = response.body();
@@ -54,6 +71,14 @@ public class SearchableActivity extends AppCompatActivity {
                 }
 
                 listView.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_selectable_list_item, movies){
+
+                    /**
+                     * Gets the selected movie from the list of search hits returned to the user
+                     * @param position The index of the movie that was selected from the list
+                     * @param convertView The view that was selected
+                     * @param parent The view of the parent activity
+                     * @return The view that was selected by the user
+                     */
                     @Override
                     public View getView(int position, View convertView, ViewGroup parent) {
                         // Get the Item from ListView
@@ -71,11 +96,18 @@ public class SearchableActivity extends AppCompatActivity {
                 });
 
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                    /**
+                     * Contains the logic to redirect user to the movie information page for the selected movie
+                     * @param adapterView The adapter that will be used to determine the adapter that is needed
+                     * @param view The layout of the c
+                     * @param i The index of the view that was selected
+                     * @param l The total number of views to select from
+                     */
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
                         Intent intent = new Intent(SearchableActivity.this, MovieInfoView.class);
-                        String movie = adapterView.getAdapter().getItem(i).toString();
                         Movie selected_movie = movieList.getMovies().get(i);
                         intent.putExtra("MovieObject", selected_movie);
                         startActivity(intent);
@@ -83,6 +115,11 @@ public class SearchableActivity extends AppCompatActivity {
                 });
             }
 
+            /**
+             * Displays the error message
+             * @param call list of movies to be extracted from API
+             * @param t error which occurred while retrieving movies from API
+             */
             @Override
             public void onFailure(Call<MovieList> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();

@@ -11,12 +11,11 @@ import java.util.List;
  */
 public class MovieList {
 
-    /**
-     * Contains a list of movies
-     */
+
     @SerializedName("results")
     @Expose
     private List<Movie> movies = null;
+
 
     @SerializedName("total_pages")
     @Expose
@@ -33,12 +32,8 @@ public class MovieList {
 
     /**
      * Updates the list of movies
-     * @param movies new list of movies
+     * @return the number of pages needed to display the entire list of movies
      */
-    public void setMovies(List<Movie> movies) {
-        this.movies = movies;
-    }
-
     public int getMaxPages(){return maxPages;}
 
 }

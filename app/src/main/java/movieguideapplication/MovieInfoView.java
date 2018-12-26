@@ -39,13 +39,19 @@ import retrofit2.Response;
 
 import static java.lang.Thread.sleep;
 
-
+/**
+ * Displays the movie information once a movie has been selected by the user
+ */
 public class MovieInfoView extends AppCompatActivity  {
     ImageView movieImage;
     String base_image_url = "https://image.tmdb.org/t/p/w780";
     RecyclerView recyclerView;
     Vector<YouTubeVideos> trailers = new Vector<>();
 
+    /**
+     * Creates the user interface when the application is run
+     * @param savedInstanceState Holds the saved state of the application
+     */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,7 +97,10 @@ public class MovieInfoView extends AppCompatActivity  {
 
     }
 
-
+    /**
+     * Gets the movie trailers for the movie passed into the method
+     * @param movie Movie object for which videos need to be retrieved
+     */
     private void getVideos(final Movie movie){
 
         MovieRetriever video_retriever = ApiUtils.getVideoRetriever();
@@ -101,6 +110,11 @@ public class MovieInfoView extends AppCompatActivity  {
 
         call.enqueue(new Callback<VideoList>() {
 
+            /**
+             * Puts the videos into a list
+             * @param call list of movies to be extracted from API
+             * @param response response from the API
+             */
             @Override
             public void onResponse(Call<VideoList> call, Response<VideoList> response) {
 
@@ -125,6 +139,11 @@ public class MovieInfoView extends AppCompatActivity  {
                 }
             }
 
+            /**
+             * Displays the error message
+             * @param call list of movies to be extracted from API
+             * @param t error which occurred while retrieving movies from API
+             */
             @Override
             public void onFailure(Call<VideoList> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();

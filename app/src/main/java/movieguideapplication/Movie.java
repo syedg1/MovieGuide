@@ -6,42 +6,28 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 /**
- * Parses data extracted from the API
+ * Parses movie data extracted from the API
  */
 @SuppressWarnings("serial")
 public class Movie implements Serializable {
 
-    /**
-     * Contains the ID number of the movie
-     */
     @SerializedName("id")
     @Expose
     int id;
 
-    /**
-     * Boolean value corresponding to the availability of the movie trailer
-     */
     @SerializedName("video")
     @Expose
     private boolean video;
 
-    /**
-     * Contains the average rating of the movie
-     */
     @SerializedName("vote_average")
     @Expose
     private double vote_average;
 
-    /**
-     * Title of the movie
-     */
+
     @SerializedName("title")
     @Expose
     String title;
 
-    /**
-     * Contains a numerical value for the popularity of the movie
-     */
     @SerializedName("popularity")
     @Expose
     double popularity;
@@ -65,6 +51,9 @@ public class Movie implements Serializable {
      * @param vote_average Contains the average rating of the movie
      * @param title Contains a numerical value for the popularity of the movie
      * @param popularity Contains a numerical value for the popularity of the movie
+     * @param overview Contains the summary of the movie
+     * @param image_path Contains the path of the movie image
+     * @param release_date Contains the release date of the movie
      */
     public Movie(int id, boolean video, double vote_average, String title, double popularity, String overview, String image_path, String release_date)
     {
@@ -87,20 +76,42 @@ public class Movie implements Serializable {
         return title;
     }
 
+    /**
+     * Gets the Id of a movie
+     * @return id
+     */
     public int getId()
     {
         return id;
     }
 
+    /**
+     * gets the movie summary
+     * @return overview
+     */
     public String getOverview(){return overview;}
 
+    /**
+     * gets the rating of a movie
+     * @return vote_average
+     */
     public double getRating(){return vote_average;}
 
+    /**
+     * gets the popularity number of a movie
+     * @return popularity
+     */
     public double getPopularity(){return popularity;}
 
+    /**
+     * gets the path for the movie poster of a movie
+     * @return image_path
+     */
     public String getImagePath(){return image_path;}
 
+    /**
+     * gets the release date of a movie
+     * @return release_date
+     */
     public String getReleaseDate(){return release_date;}
-
-    public Boolean isVideo(){return video;}
 }
