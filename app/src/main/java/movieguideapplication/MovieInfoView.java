@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -120,7 +121,7 @@ public class MovieInfoView extends AppCompatActivity  {
 
                 //Taking response from API and storing in VideoList object
                 final VideoList videoList = response.body();
-                String resolvedUrl = "";
+                String resolvedUrl;
 
 
                 for(int i=0;i < videoList.getVideos().size();i++) {
@@ -136,6 +137,7 @@ public class MovieInfoView extends AppCompatActivity  {
 
                     VideoAdapter videoAdapter = new VideoAdapter(trailers);
                     recyclerView.setAdapter(videoAdapter);
+                    recyclerView.addItemDecoration(new CirclePagerIndicatorDecoration(getApplicationContext()));
                 }
             }
 

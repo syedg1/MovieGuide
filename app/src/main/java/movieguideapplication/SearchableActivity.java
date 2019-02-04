@@ -1,10 +1,17 @@
 package movieguideapplication;
 
+import android.app.SearchManager;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -12,6 +19,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,16 +43,35 @@ public class SearchableActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_activity);
         listView = findViewById(R.id.movieListView);
-        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
-        TextView toolbar_title = (TextView)toolbar.findViewById(R.id.toolbarTitle);
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbarSearch);
+        TextView toolbar_title = (TextView)toolbar.findViewById(R.id.searchToolbarTitle);
         toolbar_title.setText(getResources().getString(R.string.app_name));
         setSupportActionBar(toolbar);
+
+        //Google Ads
+        AdView mAdView = findViewById(R.id.adViewSearch);
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .build();
+        mAdView.loadAd(adRequest);
+
+        //Back Button
+        toolbar.setNavigationIcon(R.drawable.ic_back);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(SearchableActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
         Intent intent = getIntent();
         String query = intent.getStringExtra("Query");
 
         searchMovies(query);
     }
+
 
     /**
      * This method takes a query and makes an API request to retrieve a list of movies matching that query
@@ -64,6 +93,11 @@ public class SearchableActivity extends AppCompatActivity {
             public void onResponse(Call<MovieList> call, Response<MovieList> response) {
                 final MovieList movieList = response.body();
                 String[] movies = new String[movieList.getMovies().size()];
+
+                if (movieList.getMovies().size() == 0){
+                    Toast.makeText(getBaseContext(), "No results found",
+                            Toast.LENGTH_LONG).show();
+                }
 
                 for (int i = 0; i < movieList.getMovies().size(); i++){
                     movies[i] = movieList.getMovies().get(i).getTitle();

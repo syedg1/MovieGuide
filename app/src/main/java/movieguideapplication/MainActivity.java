@@ -35,6 +35,11 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+
 
 /**
  * Parent class of the application
@@ -63,6 +68,13 @@ public class MainActivity extends AppCompatActivity{
         toolbar_title.setText(getResources().getString(R.string.app_name));
         setSupportActionBar(toolbar);
 
+        //Google Ads
+        MobileAds.initialize(this, "ca-app-pub-5772392616136703~6236874554");
+
+        AdView mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
         // Search Action
         toolbar.inflateMenu(R.menu.menu_main);
 
@@ -71,8 +83,6 @@ public class MainActivity extends AppCompatActivity{
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                //Toast.makeText(getApplicationContext(), "Sort", Toast.LENGTH_SHORT).show();
                 Intent intent = getIntent();
                 sortOption = intent.getIntExtra("SelectedSortingOption", 0);
                 sortOptionDialog(sortOption);
@@ -157,7 +167,6 @@ public class MainActivity extends AppCompatActivity{
                      */
                     @Override
                     public boolean onQueryTextSubmit(String query) {
-                        System.out.println(query);
                         Intent intent = new Intent(MainActivity.this, SearchableActivity.class);
                         intent.putExtra("Query", query);
                         startActivity(intent);
@@ -244,6 +253,7 @@ public class MainActivity extends AppCompatActivity{
                             intent.putExtra("SelectedSortingOption", sortOpt);
                             startActivity(intent);
                             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                            finish();
                         }
                     }
                 });
@@ -264,32 +274,13 @@ public class MainActivity extends AppCompatActivity{
                             intent.putExtra("SelectedSortingOption", sortOpt);
                             startActivity(intent);
                             overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                            finish();
                         }
                     }
                 });
 
-                String[] movies = new String[movieList.getMovies().size()];
 
-                for (int i = 0; i < movieList.getMovies().size(); i++){
-                    movies[i] = movieList.getMovies().get(i).getTitle();
-                }
-
-                listView.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_selectable_list_item, movies){
-                                        @Override
-                                        public View getView(int position, View convertView, ViewGroup parent) {
-                                            // Get the Item from ListView
-                                            View view = super.getView(position, convertView, parent);
-
-                                            // Initialize a TextView for ListView each Item
-                                            TextView tv = (TextView) view.findViewById(android.R.id.text1);
-
-                                            // Set the text color of TextView (ListView Item)
-                                            tv.setTextColor(getResources().getColor(R.color.colorAccent));
-
-                                            // Generate ListView Item using TextView
-                                            return view;
-                                        }
-                });
+                listView.setAdapter(new ListAdapter(getApplicationContext(), R.layout.adapter_view_layout, movieList.getMovies()));
 
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
