@@ -21,6 +21,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import retrofit2.Call;
@@ -67,6 +68,7 @@ public class MainActivity extends AppCompatActivity{
         TextView toolbar_title = (TextView)toolbar.findViewById(R.id.toolbarTitle);
         toolbar_title.setText(getResources().getString(R.string.app_name));
         setSupportActionBar(toolbar);
+
 
         //Google Ads
         MobileAds.initialize(this, "ca-app-pub-5772392616136703~6236874554");

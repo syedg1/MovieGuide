@@ -104,30 +104,7 @@ public class SearchableActivity extends AppCompatActivity {
                     System.out.println(movies[i]);
                 }
 
-                listView.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_selectable_list_item, movies){
-
-                    /**
-                     * Gets the selected movie from the list of search hits returned to the user
-                     * @param position The index of the movie that was selected from the list
-                     * @param convertView The view that was selected
-                     * @param parent The view of the parent activity
-                     * @return The view that was selected by the user
-                     */
-                    @Override
-                    public View getView(int position, View convertView, ViewGroup parent) {
-                        // Get the Item from ListView
-                        View view = super.getView(position, convertView, parent);
-
-                        // Initialize a TextView for ListView each Item
-                        TextView tv = (TextView) view.findViewById(android.R.id.text1);
-
-                        // Set the text color of TextView (ListView Item)
-                        tv.setTextColor(getResources().getColor(R.color.colorAccent));
-
-                        // Generate ListView Item using TextView
-                        return view;
-                    }
-                });
+                listView.setAdapter(new ListAdapter(getApplicationContext(), R.layout.adapter_view_layout, movieList.getMovies()));
 
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 

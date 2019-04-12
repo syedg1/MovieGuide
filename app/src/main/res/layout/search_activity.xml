@@ -19,6 +19,7 @@
         android:id = "@+id/movieListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="60dp"
         />
     </LinearLayout>
 
@@ -28,14 +29,21 @@
         xmlns:ads="http://schemas.android.com/apk/res-auto"
         >
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/backgroundDark">
+        </RelativeLayout>
+
         <com.google.android.gms.ads.AdView
             android:id="@+id/adViewSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            ads:adSize="SMART_BANNER"
-            ads:adUnitId="ca-app-pub-5772392616136703/3449153011">
+            ads:adSize="BANNER"
+            ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
         </com.google.android.gms.ads.AdView>
 
     </RelativeLayout>
